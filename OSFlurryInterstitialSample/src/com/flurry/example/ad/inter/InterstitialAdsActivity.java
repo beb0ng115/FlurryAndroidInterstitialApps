@@ -40,6 +40,7 @@ public class InterstitialAdsActivity extends Activity implements
 			public void onClick(View v) {
 
 				adLayout = (FrameLayout) findViewById(R.id.adLayout);
+				if (!FlurryAds.isAdReady(adSpace))
 				FlurryAds.fetchAd(mContext, adSpace, adLayout,
 						FlurryAdSize.FULLSCREEN);
 			}
@@ -57,7 +58,7 @@ public class InterstitialAdsActivity extends Activity implements
 			FlurryAgent.setLogLevel(2);
 			FlurryAgent.onStartSession(mContext, apiKey);
 			FlurryAds.enableTestAds(false);
-
+			
 		} catch (Exception e) {
 			Log.e(kLogTag, e.getMessage());
 		}
@@ -77,7 +78,6 @@ public class InterstitialAdsActivity extends Activity implements
 	public void onStop() {
 		super.onStop();
 		FlurryAds.removeAd(mContext, adSpace, adLayout);
-		FlurryAds.setAdListener(null);
 		FlurryAgent.onEndSession(mContext);
 	}
 
